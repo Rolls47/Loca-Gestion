@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% form_theme registrationForm 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-4 mt-5">
+                {% for flashError in app.flashes('verify_email_error') %}
+                    <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+                {% endfor %}
+
+                <h1 class="mt-5">Inscription</h1>
+                <div class="d-flex">
+                    {{ form_start(registrationForm) }}
+                    {{ form_label(registrationForm.email) }}
+                    {{ form_widget(registrationForm.email) }}
+                    {{ form_label(registrationForm.pseudo) }}
+                    {{ form_widget(registrationForm.pseudo) }}
+                    {{ form_label(registrationForm.plainPassword) }}
+                    {{ form_widget(registrationForm.plainPassword) }}
+                    <button type="submit" class="btn btn-lg btn-primary mt-2">Envoyer</button>
+                    {{ form_end(registrationForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
