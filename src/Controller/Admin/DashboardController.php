@@ -36,14 +36,24 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
 
-        yield MenuItem::section('CRUD', 'fa fa-home');
-        yield MenuItem::linkToCrud('Utilisateur ', 'fa fa-home', User::class);
-        yield MenuItem::linkToCrud('Localisation ', 'fa fa-home', Location::class);
+        yield MenuItem::section('CRUD', 'fas fa-cogs');
+        yield MenuItem::linkToCrud('Utilisateur ', 'fa fa-user', User::class);
+
+        yield MenuItem::section('Les biens', 'far fa-building');
+
+        yield MenuItem::linkToCrud('Localisation ', 'fas fa-map-marker-alt', Location::class);
         yield MenuItem::linkToCrud('Propriété', 'fa fa-home', Property::class);
-        yield MenuItem::linkToCrud('Compta localisation', 'fa fa-home', LocationAccounting::class);
+
+        yield MenuItem::section('Ligne compta', 'fas fa-calculator');
+
+        yield MenuItem::linkToCrud('Compta localisation', 'fas fa-map-marker-alt', LocationAccounting::class);
         yield MenuItem::linkToCrud('Compta propriété', 'fa fa-home', PropertyAccounting::class);
-        yield MenuItem::linkToCrud('Type de propriété', 'fa fa-home', PropertyType::class);
-        yield MenuItem::linkToCrud('Type d\'opération', 'fa fa-home', OperationType::class);
-        yield MenuItem::linkToCrud('Label', 'fa fa-home', Label::class);
+
+        yield MenuItem::section('Gestions', 'fas fa-database');
+
+        yield MenuItem::linkToCrud('Type de propriété', 'fas fa-warehouse', PropertyType::class);
+        yield MenuItem::linkToCrud('Type d\'opération', 'fas fa-exchange-alt', OperationType::class);
+        yield MenuItem::linkToCrud('Label', 'fas fa-tag', Label::class);
     }
 }
+

@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\CRUD;
 
 use App\Entity\PropertyType;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -23,4 +24,11 @@ class PropertyTypeCrudController extends AbstractCrudController
         ];
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+
+            ->setPageTitle('index', 'Type de propriété')
+            ->setSearchFields(['id', 'type']);
+    }
 }
