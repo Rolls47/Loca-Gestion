@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\CRUD;
 
 use App\Entity\User;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -25,4 +26,11 @@ class UserCrudController extends AbstractCrudController
         ];
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+
+            ->setPageTitle('index', 'Utilisateur')
+            ->setSearchFields(['id', 'email', 'pseudo']);
+    }
 }

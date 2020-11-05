@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\CRUD;
 
 use App\Entity\Location;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -27,4 +28,11 @@ class LocationCrudController extends AbstractCrudController
         ];
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+
+            ->setPageTitle('index', 'Localisation')
+            ->setSearchFields(['id', 'name', 'city', 'address', 'comment', 'name']);
+    }
 }
