@@ -3,5 +3,19 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<p>test</p>
+<div class="container">
+    <div class="row">
+        <div class="col-3 mt-5">
+            <p class="d-flex justify-content-center">Total des localisations</p>
+            <p class="d-flex justify-content-center">{{ sumLocalAccounting|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
+        </div>
+        <div class="col-6">
+        </div>
+        <div class="col-3 mt-5">
+            <p class="d-flex justify-content-center">Total des localisations</p>
+            <p class="d-flex justify-content-center">{{ sumPropertyAccounting|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

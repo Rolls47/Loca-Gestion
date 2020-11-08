@@ -19,32 +19,10 @@ class LocationAccountingRepository extends ServiceEntityRepository
         parent::__construct($registry, LocationAccounting::class);
     }
 
-    // /**
-    //  * @return LocationAccounting[] Returns an array of LocationAccounting objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function totalLocationAccounting()
     {
         return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+            ->select('SUM(l.value)')
+            ->getQuery()->getOneOrNullResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?LocationAccounting
-    {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
