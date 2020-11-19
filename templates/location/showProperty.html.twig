@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-{% for property in properties %}
-    {{ property.name }}
-{% endfor %}
+    <div class="container">
+        <div class="row justify-content-around">
+{% include 'Components/Property/card.html.twig' %}
+        </div>
+    </div>
 {% endblock %}
