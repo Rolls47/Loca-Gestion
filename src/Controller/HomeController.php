@@ -1,11 +1,6 @@
 <?php
 
 namespace App\Controller;
-
-use App\Entity\Location;
-use App\Entity\LocationAccounting;
-use App\Repository\LocationAccountingRepository;
-use App\Repository\LocationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,8 +22,6 @@ class HomeController extends AbstractController
 
         $propertyAccounting = $em->getRepository('App:PropertyAccounting');
         $totalPropertyAccounting =($propertyAccounting->totalPropertyAccounting()[1] / 100);
-
-
 
         return $this->render('home/index.html.twig', [
             'sumLocalAccounting' => $totalLocationAccounting,

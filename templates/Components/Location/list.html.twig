@@ -1,0 +1,7 @@
+{% for location in locations %}
+    <a href="#">
+        <ul class="list-group mt-3">
+            <li class="list-group-item">{{ location.name }} - {{ location.city }}</li>
+        </ul>
+    </a>
+{% endfor %}
