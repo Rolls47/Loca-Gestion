@@ -48,7 +48,7 @@ class LocationController extends AbstractController
 
         $sumByLocation = ($locationRep->sumByLocation($location->getId())[1] / 100);
 
-        $benefit = ($sumByLocation + $sumPropertiesByLocation);
+        $benefit = ($sumPropertiesByLocation - $sumByLocation);
 
         foreach ($properties as $property) {
             $localisation = $property->getLocation();
