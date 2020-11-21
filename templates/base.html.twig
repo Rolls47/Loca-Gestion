@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.css"/>
         {% block stylesheets %}{% endblock %}
     <header>
         {% block header %}
@@ -19,5 +20,6 @@
     {% endblock %}
     </body>
         {{ encore_entry_script_tags('app') }}
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.js"></script>
         {% block javascripts %}{% endblock %}
 </html>
