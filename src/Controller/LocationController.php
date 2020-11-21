@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/localisation", name="location_")
+ * @Route("/localisations", name="location_")
  */
 class LocationController extends AbstractController
 {
@@ -23,6 +23,7 @@ class LocationController extends AbstractController
     {
         $locations = $em->getRepository('App:Location')->findAll();
 
+
         return $this->render('location/index.html.twig', [
             'locations' => $locations,
         ]);
@@ -32,13 +33,34 @@ class LocationController extends AbstractController
      * @Route("/{slug}", name="showProperty")
      * @param Location $location
      * @param PropertyRepository $propertyRepository
+     * @param EntityManagerInterface $em
      * @return Response
      */
-    public function showProperty(Location $location, PropertyRepository $propertyRepository): Response
+    public function showProperty(Location $location, PropertyRepository $propertyRepository, EntityManagerInterface $em): Response
     {
         $properties = $propertyRepository->findBy(['location' => $location]);
+
+
+        $propertyRep = $em->getRepository('App:Property');
+        $locationRep = $em->getRepository('App:Location');
+
+        $sumPropertiesByLocation = ($propertyRep->sumPropertiesByLocation($location->getId())[1] / 100);
+
+        $sumByLocation = ($locationRep->sumByLocation($location->getId())[1] / 100);
+
+        $benefit = ($sumByLocation + $sumPropertiesByLocation);
+
+        foreach ($properties as $property) {
+            $localisation = $property->getLocation();
+            $countOfProperty = count($localisation->getProperties());
+        }
         return $this->render('location/showProperty.html.twig', [
             'properties' => $properties,
+            'location' => $localisation,
+            'countOfProperty' => $countOfProperty,
+            'sumPropertiesByLocation' => $sumPropertiesByLocation,
+            'sumByLocation' => $sumByLocation,
+            'benefit' => $benefit,
         ]);
     }
 }
