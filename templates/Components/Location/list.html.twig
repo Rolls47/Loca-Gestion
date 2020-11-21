@@ -1,5 +1,5 @@
 {% for location in locations %}
-    <a href="#">
+    <a href="{{ path('location_showProperty', {'slug': location.slug}) }}">
         <ul class="list-group mt-3">
             <li class="list-group-item">{{ location.name }} - {{ location.city }}</li>
         </ul>
