@@ -19,32 +19,13 @@ class LocationRepository extends ServiceEntityRepository
         parent::__construct($registry, Location::class);
     }
 
-    // /**
-    //  * @return Location[] Returns an array of Location objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function sumByLocation($id)
     {
         return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+            ->select('SUM(la.value)')
+            ->setParameter('id',  $id)
+            ->innerJoin('l.locationAccountings', 'la')
+            ->where('l.id = :id')
+            ->getQuery()->getOneOrNullResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Location
-    {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -19,32 +19,14 @@ class PropertyRepository extends ServiceEntityRepository
         parent::__construct($registry, Property::class);
     }
 
-    // /**
-    //  * @return Property[] Returns an array of Property objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function sumPropertiesByLocation($id)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+            ->select('SUM(pa.value)')
+            ->setParameter('id',  $id)
+            ->innerJoin('p.propertyAccountings', 'pa')
+            ->innerJoin('p.location', 'l')
+            ->where('p.location = :id')
+            ->getQuery()->getOneOrNullResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Property
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
