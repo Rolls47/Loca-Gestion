@@ -29,7 +29,7 @@ class LocationController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="")
+     * @Route("/{slug}", name="showProperty")
      * @param Location $location
      * @param PropertyRepository $propertyRepository
      * @return Response
