@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Location;
-use App\Repository\PropertyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,17 +31,15 @@ class LocationController extends AbstractController
     /**
      * @Route("/{slug}", name="showProperty")
      * @param Location $location
-     * @param PropertyRepository $propertyRepository
      * @param EntityManagerInterface $em
      * @return Response
      */
-    public function showProperty(Location $location, PropertyRepository $propertyRepository, EntityManagerInterface $em): Response
+    public function showProperty(Location $location, EntityManagerInterface $em): Response
     {
-        $properties = $propertyRepository->findBy(['location' => $location]);
-
-
         $propertyRep = $em->getRepository('App:Property');
         $locationRep = $em->getRepository('App:Location');
+
+        $properties = $propertyRep->findBy(['location' => $location]);
 
         $sumPropertiesByLocation = ($propertyRep->sumPropertiesByLocation($location->getId())[1] / 100);
 
@@ -54,6 +51,7 @@ class LocationController extends AbstractController
             $localisation = $property->getLocation();
             $countOfProperty = count($localisation->getProperties());
         }
+
         return $this->render('location/showProperty.html.twig', [
             'properties' => $properties,
             'location' => $localisation,

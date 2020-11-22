@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Property;
-use App\Repository\PropertyAccountingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Omines\DataTablesBundle\Adapter\ArrayAdapter;
 use Omines\DataTablesBundle\Column\DateTimeColumn;
@@ -27,14 +26,14 @@ class PropertyAccountingController extends AbstractController
      * @param EntityManagerInterface $em
      * @return Response
      */
-    public function show(EntityManagerInterface $em, Property $property,Request $request, DataTableFactory $dataTableFactory): Response
+    public function show(EntityManagerInterface $em, Property $property, Request $request, DataTableFactory $dataTableFactory): Response
     {
+        $properties =  $em->getRepository('App:PropertyAccounting')->findBy(['property' => $property]);
+
         $propertiesAccounting = $em->getRepository('App:PropertyAccounting')->findBy(
             ['property' => $property],
             ['date' => 'ASC']
         );
-
-        $properties =  $em->getRepository('App:PropertyAccounting')->findBy(['property' => $property]);
 
         foreach ($properties as $data){
             $propriete = $data->getProperty()->getName();

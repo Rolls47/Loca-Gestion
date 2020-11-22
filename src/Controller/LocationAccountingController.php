@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Location;
-use App\Repository\LocationAccountingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Omines\DataTablesBundle\Adapter\ArrayAdapter;
 use Omines\DataTablesBundle\Column\DateTimeColumn;
@@ -29,12 +28,12 @@ class LocationAccountingController extends AbstractController
      */
     public function show(EntityManagerInterface $em, Location $location, Request $request, DataTableFactory $dataTableFactory): Response
     {
+        $locations = $em->getRepository('App:LocationAccounting')->findBy(['location' => $location]);
+
         $locationsAccounting = $em->getRepository('App:LocationAccounting')->findBy(
             ['location' => $location],
             ['date' => 'ASC']
         );
-
-        $locations = $em->getRepository('App:LocationAccounting')->findBy(['location' => $location]);
 
         foreach ($locations as $data){
             $localisation = $data->getLocation()->getName();
