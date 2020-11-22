@@ -18,13 +18,14 @@ class HomeController extends AbstractController
     public function index(EntityManagerInterface $em): Response
     {
         $locationAccounting = $em->getRepository('App:LocationAccounting');
-        $totalLocationAccounting = ($locationAccounting->totalLocationAccounting()[1] / 100);
-
         $propertyAccounting = $em->getRepository('App:PropertyAccounting');
-        $totalPropertyAccounting =($propertyAccounting->totalPropertyAccounting()[1] / 100);
+
+
+        $totalLocationAccounting = ($locationAccounting->totalLocationAccounting()[1] / 100);
+        $totalPropertyAccounting = ($propertyAccounting->totalPropertyAccounting()[1] / 100);
 
         return $this->render('home/index.html.twig', [
-            'sumLocalAccounting' => $totalLocationAccounting,
+            'sumLocationAccounting' => $totalLocationAccounting,
             'sumPropertyAccounting' => $totalPropertyAccounting,
         ]);
     }

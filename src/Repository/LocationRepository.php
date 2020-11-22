@@ -28,4 +28,15 @@ class LocationRepository extends ServiceEntityRepository
             ->where('l.id = :id')
             ->getQuery()->getOneOrNullResult();
     }
+   /* public function sumByLabelPerLocation($id, $label)
+    {
+        return $this->createQueryBuilder('l')
+            ->select('SUM(la.value)')
+            ->setParameter('id',  $id)
+            ->setParameter('label', $label)
+            ->innerJoin('l.locationAccountings', 'la')
+            ->where('l.id = :id')
+            ->andWhere('la.label = :label')
+            ->getQuery()->getOneOrNullResult();
+    }*/
 }
