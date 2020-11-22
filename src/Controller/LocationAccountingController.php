@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Property;
-use App\Repository\PropertyAccountingRepository;
+use App\Entity\Location;
+use App\Repository\LocationAccountingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Omines\DataTablesBundle\Adapter\ArrayAdapter;
 use Omines\DataTablesBundle\Column\DateTimeColumn;
@@ -15,41 +15,40 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/compta", name="propertyAccounting_")
+ * @Route("/comptabilite", name="locationAccounting_")
  **/
-class PropertyAccountingController extends AbstractController
+class LocationAccountingController extends AbstractController
 {
     /**
      * @Route("/{slug}", name="show")
-     * @param Property $property
+     * @param EntityManagerInterface $em
+     * @param Location $location
      * @param Request $request
      * @param DataTableFactory $dataTableFactory
-     * @param EntityManagerInterface $em
      * @return Response
      */
-    public function show(EntityManagerInterface $em, Property $property,Request $request, DataTableFactory $dataTableFactory): Response
+    public function show(EntityManagerInterface $em, Location $location, Request $request, DataTableFactory $dataTableFactory): Response
     {
-        $propertiesAccounting = $em->getRepository('App:PropertyAccounting')->findBy(
-            ['property' => $property],
+        $locationsAccounting = $em->getRepository('App:LocationAccounting')->findBy(
+            ['location' => $location],
             ['date' => 'ASC']
         );
 
-        $properties =  $em->getRepository('App:PropertyAccounting')->findBy(['property' => $property]);
+        $locations = $em->getRepository('App:LocationAccounting')->findBy(['location' => $location]);
 
-        foreach ($properties as $data){
-            $propriete = $data->getProperty()->getName();
+        foreach ($locations as $data){
+            $localisation = $data->getLocation()->getName();
         }
 
         $results = [];
-        foreach ($propertiesAccounting as $propertyAccounting) {
+        foreach ($locationsAccounting as $locationAccounting) {
             $results[] = [
-                'id' => $propertyAccounting->getId(),
-                'label' => $propertyAccounting->getLabel(),
-                'operationType' => $propertyAccounting->getOperationType(),
-                'value' => ($propertyAccounting->getValue() / 100),
-                'date' => $propertyAccounting->getDate(),
-                'comment' => $propertyAccounting->getComment(),
-                'property' => $propertyAccounting->getProperty(),
+                'id' => $locationAccounting->getId(),
+                'label' => $locationAccounting->getLabel(),
+                'operationType' => $locationAccounting->getOperationType(),
+                'value' => ($locationAccounting->getValue() / 100),
+                'date' => $locationAccounting->getDate(),
+                'comment' => $locationAccounting->getComment(),
             ];
         }
 
@@ -76,11 +75,8 @@ class PropertyAccountingController extends AbstractController
             ])
             ->add('comment', TextColumn::class, [
                 'label' => 'Commentaire',
-            ])
-            ->add('property', TextColumn::class, [
-                'label' => 'Propriétée',
-                'orderable' => true
             ]);
+
 
         $datatable->createAdapter(ArrayAdapter::class, $results);
         $datatable->handleRequest($request);
@@ -88,10 +84,9 @@ class PropertyAccountingController extends AbstractController
         if ($datatable->isCallback()) {
             return $datatable->getResponse();
         }
-
-        return $this->render('property_accounting/show.html.twig', [
+        return $this->render('location_accounting/show.html.twig', [
             'datatable' => $datatable,
-            'property' => $propriete,
+            'location' => $localisation,
         ]);
     }
 }

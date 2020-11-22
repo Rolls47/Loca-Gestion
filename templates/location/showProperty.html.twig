@@ -28,6 +28,10 @@
             <div>
                 <p>faire des sommes avec eau et electricité pour chaque localisation </p>
             </div>
+        <div>
+            <a href="{{ path('locationAccounting_show', {'slug': location.slug}) }}" class="card-link">Voir les lignes compta</a>
+
+        </div>
         <div class="d-flex justify-content-around">
             {% include 'Components/Property/card.html.twig' %}
         </div>

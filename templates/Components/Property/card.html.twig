@@ -4,7 +4,7 @@
         <h5 class="card-title">{{ property.name }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ property.propertyType }}</h6>
         <p class="card-text">{{ property.comment }}</p>
-        <a href="{{ path('accounting_show', {'slug': property.slug}) }}" class="card-link">Voir les lignes compta</a>
+        <a href="{{ path('propertyAccounting_show', {'slug': property.slug}) }}" class="card-link">Voir les lignes compta</a>
     </div>
 </div>
 {% endfor %}
