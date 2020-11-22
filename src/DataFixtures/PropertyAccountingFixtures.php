@@ -19,7 +19,7 @@ class PropertyAccountingFixtures extends Fixture implements DependentFixtureInte
         for ($i = 1; $i < 21; $i++) {
             $propertyAccounting = new PropertyAccounting();
             $comment = 'nada';
-            $value = random_int(-50000, 100000);
+            $value = random_int(0, 100000);
             $property = random_int(1, 9);
             $label = random_int(1, 7);
             $operationType = random_int(1, 2);
