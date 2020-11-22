@@ -3,13 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Location;
+use App\Form\LocationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/localisations", name="location_")
+ * @Route("/localisation", name="location_")
  */
 class LocationController extends AbstractController
 {
@@ -25,6 +28,27 @@ class LocationController extends AbstractController
 
         return $this->render('location/index.html.twig', [
             'locations' => $locations,
+        ]);
+    }
+
+    /**
+     * @Route ("/new", name="new")
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
+    public function new(EntityManagerInterface $em, Request $request): Response
+    {
+        $location = new Location();
+        $form = $this->createForm(LocationType::class, $location);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($location);
+            $em->flush();
+            return $this->redirectToRoute('home_index');
+        }
+        return $this->render('location/new.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
@@ -61,4 +85,5 @@ class LocationController extends AbstractController
             'benefit' => $benefit,
         ]);
     }
+
 }
