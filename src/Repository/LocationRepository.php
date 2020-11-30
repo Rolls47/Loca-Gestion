@@ -23,20 +23,22 @@ class LocationRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('l')
             ->select('SUM(la.value)')
+            ->andWhere('l.id = :id')
             ->setParameter('id',  $id)
             ->innerJoin('l.locationAccountings', 'la')
-            ->where('l.id = :id')
             ->getQuery()->getOneOrNullResult();
     }
-   /* public function sumByLabelPerLocation($id, $label)
+
+    public function sumByLabelPerLocation($id, $label)
     {
         return $this->createQueryBuilder('l')
             ->select('SUM(la.value)')
+            ->andWhere('l.id = :id')
             ->setParameter('id',  $id)
-            ->setParameter('label', $label)
             ->innerJoin('l.locationAccountings', 'la')
-            ->where('l.id = :id')
             ->andWhere('la.label = :label')
+            ->setParameter('label', $label)
             ->getQuery()->getOneOrNullResult();
-    }*/
+    }
+
 }

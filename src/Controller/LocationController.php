@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Location;
+use App\Entity\LocationAccounting;
 use App\Form\LocationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -62,12 +63,21 @@ class LocationController extends AbstractController
     {
         $propertyRep = $em->getRepository('App:Property');
         $locationRep = $em->getRepository('App:Location');
+        $labelRep = $em->getRepository('App:Label');
 
         $properties = $propertyRep->findBy(['location' => $location]);
 
         $sumPropertiesByLocation = ($propertyRep->sumPropertiesByLocation($location->getId())[1] / 100);
 
         $sumByLocation = ($locationRep->sumByLocation($location->getId())[1] / 100);
+
+        $water = $labelRep->findBy(['name' => 'Eau']);
+        $waterId = $water[0]->getId();
+        $sumWater = ($locationRep->sumByLabelPerLocation($location->getId(), $waterId)[1] / 100);
+
+        $electricity = $labelRep->findBy(['name' => 'Électricité']);
+        $electricityId = $electricity[0]->getId();
+        $sumElectricity = ($locationRep->sumByLabelPerLocation($location->getId(), $electricityId)[1] / 100);
 
         $benefit = ($sumPropertiesByLocation - $sumByLocation);
 
@@ -83,6 +93,8 @@ class LocationController extends AbstractController
             'sumPropertiesByLocation' => $sumPropertiesByLocation,
             'sumByLocation' => $sumByLocation,
             'benefit' => $benefit,
+            'sumWater' => $sumWater,
+            'sumElec' => $sumElectricity
         ]);
     }
 
