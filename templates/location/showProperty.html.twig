@@ -29,19 +29,19 @@
             <div class="card border-success mb-3" style="min-width: 10rem;">
                 <div class="card-header">Compta localisation Eau</div>
                 <div class="card-body text-success">
-                    <h5 class="card-title">{{ sumWater|format_currency('EUR', {rounding_mode: 'floor'}) }}</h5>
+                    <h5 class="card-title">{{ sumLocationWater|format_currency('EUR', {rounding_mode: 'floor'}) }}</h5>
                 </div>
             </div>
             <div class="card border-success mb-3" style="min-width: 10rem;">
                 <div class="card-header">Compta propriétées Eau</div>
                 <div class="card-body text-success">
-                    {#       <h5 class="card-title">{{ |format_currency('EUR', {rounding_mode: 'floor'}) }}</h5> #}
+                           <h5 class="card-title">{{ sumPropertiesWater|format_currency('EUR', {rounding_mode: 'floor'}) }}</h5>
                 </div>
             </div>
             <div class="card border-success mb-3" style="min-width: 10rem;">
                 <div class="card-header">Bénéfice</div>
                 <div class="card-body text-success">
-               {#      <h5 class="card-title">{{ benefit|format_currency('EUR', {rounding_mode: 'floor'}) }}</h5> #}
+                    {#  <h5 class="card-title">{{ benefit|format_currency('EUR', {rounding_mode: 'floor'}) }}</h5> #}
                 </div>
             </div>
         </div>
@@ -49,13 +49,13 @@
             <div class="card border-success mb-3" style="min-width: 10rem;">
                 <div class="card-header">Compta localisation EDF</div>
                 <div class="card-body text-success">
-                    <h5 class="card-title">{{ sumElec|format_currency('EUR', {rounding_mode: 'floor'}) }}</h5>
+                    <h5 class="card-title">{{ sumLocationElec|format_currency('EUR', {rounding_mode: 'floor'}) }}</h5>
                 </div>
             </div>
             <div class="card border-success mb-3" style="min-width: 10rem;">
                 <div class="card-header">Compta propriétées EDF</div>
                 <div class="card-body text-success">
-                    {#       <h5 class="card-title">{{ |format_currency('EUR', {rounding_mode: 'floor'}) }}</h5> #}
+                           <h5 class="card-title">{{ sumPropertiesElec|format_currency('EUR', {rounding_mode: 'floor'}) }}</h5>
                 </div>
             </div>
             <div class="card border-success mb-3" style="min-width: 10rem;">

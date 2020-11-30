@@ -68,16 +68,7 @@ class LocationController extends AbstractController
         $properties = $propertyRep->findBy(['location' => $location]);
 
         $sumPropertiesByLocation = ($propertyRep->sumPropertiesByLocation($location->getId())[1] / 100);
-
         $sumByLocation = ($locationRep->sumByLocation($location->getId())[1] / 100);
-
-        $water = $labelRep->findBy(['name' => 'Eau']);
-        $waterId = $water[0]->getId();
-        $sumWater = ($locationRep->sumByLabelPerLocation($location->getId(), $waterId)[1] / 100);
-
-        $electricity = $labelRep->findBy(['name' => 'Électricité']);
-        $electricityId = $electricity[0]->getId();
-        $sumElectricity = ($locationRep->sumByLabelPerLocation($location->getId(), $electricityId)[1] / 100);
 
         $benefit = ($sumPropertiesByLocation - $sumByLocation);
 
@@ -86,6 +77,20 @@ class LocationController extends AbstractController
             $countOfProperty = count($localisation->getProperties());
         }
 
+    //Water Sum
+        $water = $labelRep->findBy(['name' => 'Eau']);
+        $waterId = $water[0]->getId();
+        $sumLocationWater = ($locationRep->sumByLabelPerLocation($location->getId(), $waterId)[1] / 100);
+        $sumPropertiesWater = ($propertyRep->sumByLabelPerProperties($location->getId(), $waterId)[1] / 100);
+
+    //Electricity Sum
+        $electricity = $labelRep->findBy(['name' => 'Électricité']);
+        $electricityId = $electricity[0]->getId();
+        $sumLocationElectricity = ($locationRep->sumByLabelPerLocation($location->getId(), $electricityId)[1] / 100);
+        $sumPropertiesElectricity = ($propertyRep->sumByLabelPerProperties($location->getId(), $electricityId)[1] / 100);
+
+
+
         return $this->render('location/showProperty.html.twig', [
             'properties' => $properties,
             'location' => $localisation,
@@ -93,8 +98,10 @@ class LocationController extends AbstractController
             'sumPropertiesByLocation' => $sumPropertiesByLocation,
             'sumByLocation' => $sumByLocation,
             'benefit' => $benefit,
-            'sumWater' => $sumWater,
-            'sumElec' => $sumElectricity
+            'sumLocationWater' => $sumLocationWater,
+            'sumLocationElec' => $sumLocationElectricity,
+            'sumPropertiesWater' => $sumPropertiesWater,
+            'sumPropertiesElec' => $sumPropertiesElectricity
         ]);
     }
 
