@@ -18,8 +18,8 @@ class LocationAccountingFixtures extends Fixture implements DependentFixtureInte
     {
         for ($i = 1; $i < 21; $i++) {
             $locationAccounting = new LocationAccounting();
-            $comment = 'nada';
-            $value = random_int(0, 100000);
+            $comment = '';
+            $value = random_int(-100000, 10000);
             $location = random_int(1, 3);
             $label = random_int(1, 7);
             $operationType = random_int(1, 2);
