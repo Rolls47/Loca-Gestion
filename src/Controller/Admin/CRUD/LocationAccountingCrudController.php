@@ -37,6 +37,6 @@ class LocationAccountingCrudController extends AbstractCrudController
         return $crud
 
             ->setPageTitle('index', 'Compta Localisation')
-            ->setSearchFields(['id', 'value', 'date', 'comment', 'label', 'location', 'operationType']);
+            ->setSearchFields(['id', 'value', 'date', 'comment', 'label.name', 'location.name', 'operationType.type']);
     }
 }

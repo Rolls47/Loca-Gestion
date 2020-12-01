@@ -29,4 +29,16 @@ class PropertyRepository extends ServiceEntityRepository
             ->where('p.location = :id')
             ->getQuery()->getOneOrNullResult();
     }
+    public function sumByLabelPerProperties($id, $label)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('SUM(pa.value)')
+            ->andWhere('p.location = :id')
+            ->setParameter('id',  $id)
+            ->innerJoin('p.location', 'l')
+            ->innerJoin('p.propertyAccountings', 'pa')
+            ->andWhere('pa.label = :label')
+            ->setParameter('label', $label)
+            ->getQuery()->getOneOrNullResult();
+    }
 }

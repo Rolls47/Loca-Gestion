@@ -16,7 +16,7 @@ class PropertyAccountingFixtures extends Fixture implements DependentFixtureInte
 
     public function load(ObjectManager $manager)
     {
-        for ($i = 1; $i < 21; $i++) {
+        for ($i = 1; $i < 31; $i++) {
             $propertyAccounting = new PropertyAccounting();
             $comment = 'nada';
             $value = random_int(0, 100000);

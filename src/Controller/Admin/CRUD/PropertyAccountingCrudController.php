@@ -37,6 +37,6 @@ class PropertyAccountingCrudController extends AbstractCrudController
         return $crud
 
             ->setPageTitle('index', 'Compta Propriété')
-            ->setSearchFields(['id', 'value', 'date', 'comment', 'label', 'property', 'operationType']);
+            ->setSearchFields(['id', 'value', 'date', 'comment', 'label.name', 'property.name', 'operationType.type']);
     }
 }

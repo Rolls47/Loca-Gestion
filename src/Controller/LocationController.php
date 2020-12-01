@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Location;
+use App\Entity\LocationAccounting;
 use App\Form\LocationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -62,27 +63,56 @@ class LocationController extends AbstractController
     {
         $propertyRep = $em->getRepository('App:Property');
         $locationRep = $em->getRepository('App:Location');
+        $labelRep = $em->getRepository('App:Label');
 
         $properties = $propertyRep->findBy(['location' => $location]);
 
+        $sumByLocation = ($locationRep->sumByLocation($location->getId())[1] / 100);
+        $sumByLocationTwig= ($sumByLocation - ($sumByLocation * 2));
         $sumPropertiesByLocation = ($propertyRep->sumPropertiesByLocation($location->getId())[1] / 100);
 
-        $sumByLocation = ($locationRep->sumByLocation($location->getId())[1] / 100);
-
-        $benefit = ($sumPropertiesByLocation - $sumByLocation);
+        $benefit = ($sumByLocation + $sumPropertiesByLocation);
 
         foreach ($properties as $property) {
             $localisation = $property->getLocation();
             $countOfProperty = count($localisation->getProperties());
         }
 
+    //Water Sum
+        $water = $labelRep->findBy(['name' => 'Eau']);
+        $waterId = $water[0]->getId();
+        $sumLocationWater = ($locationRep->sumByLabelPerLocation($location->getId(), $waterId)[1] / 100);
+        $sumPropertiesWater = ($propertyRep->sumByLabelPerProperties($location->getId(), $waterId)[1] / 100);
+        $benefitWater = ($sumLocationWater + $sumPropertiesWater);
+
+        $sumWaterLocationTwig = ($sumLocationWater - ($sumLocationWater * 2));
+
+    //Electricity Sum
+        $electricity = $labelRep->findBy(['name' => 'Électricité']);
+        $electricityId = $electricity[0]->getId();
+        $sumLocationElectricity = ($locationRep->sumByLabelPerLocation($location->getId(), $electricityId)[1] / 100);
+        $sumPropertiesElectricity = ($propertyRep->sumByLabelPerProperties($location->getId(), $electricityId)[1] / 100);
+        $benefitElec = ($sumLocationElectricity + $sumPropertiesElectricity);
+
+        $sumLocationElecTwig = ($sumLocationElectricity - ($sumLocationElectricity * 2));
+
+
         return $this->render('location/showProperty.html.twig', [
             'properties' => $properties,
             'location' => $localisation,
             'countOfProperty' => $countOfProperty,
+
+            'sumByLocation' => $sumByLocationTwig,
             'sumPropertiesByLocation' => $sumPropertiesByLocation,
-            'sumByLocation' => $sumByLocation,
             'benefit' => $benefit,
+
+            'sumLocationWater' => $sumWaterLocationTwig,
+            'sumPropertiesWater' => $sumPropertiesWater,
+            'benefitWater' => $benefitWater,
+
+            'sumLocationElec' => $sumLocationElecTwig,
+            'sumPropertiesElec' => $sumPropertiesElectricity,
+            'benefitElec' => $benefitElec,
         ]);
     }
 
