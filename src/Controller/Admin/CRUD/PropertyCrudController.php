@@ -32,6 +32,6 @@ class PropertyCrudController extends AbstractCrudController
         return $crud
 
             ->setPageTitle('index', 'Propriété')
-            ->setSearchFields(['id', 'name', 'comment', 'location', 'propertyType']);
+            ->setSearchFields(['id', 'name', 'comment', 'location.name', 'propertyType.type']);
     }
 }
