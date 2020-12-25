@@ -24,7 +24,9 @@ class LocationAccountingType extends AbstractType
                 'divisor' => 100,
             ])
             ->add('date', DateType::class, [
-                'label' => 'Date :'
+                'label' => 'Date :',
+                'widget' => 'single_text',
+                'attr' => ['class' => 'js-datepicker'],
             ])
             ->add('comment', TextType::class, [
                 'label' => 'Commentaire :'

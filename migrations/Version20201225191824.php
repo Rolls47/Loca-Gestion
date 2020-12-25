@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20201121101645 extends AbstractMigration
+final class Version20201225191824 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -27,6 +27,7 @@ final class Version20201121101645 extends AbstractMigration
         $this->addSql('CREATE TABLE property (id INT AUTO_INCREMENT NOT NULL, property_type_id INT NOT NULL, location_id INT NOT NULL, name VARCHAR(255) NOT NULL, comment VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8BF21CDE989D9B62 (slug), INDEX IDX_8BF21CDE9C81C6EB (property_type_id), INDEX IDX_8BF21CDE64D218E (location_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE property_accounting (id INT AUTO_INCREMENT NOT NULL, operation_type_id INT NOT NULL, label_id INT NOT NULL, property_id INT NOT NULL, value INT NOT NULL, date DATE DEFAULT NULL, comment VARCHAR(255) DEFAULT NULL, INDEX IDX_D86421D6668D0C5E (operation_type_id), INDEX IDX_D86421D633B92F39 (label_id), INDEX IDX_D86421D6549213EC (property_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE property_type (id INT AUTO_INCREMENT NOT NULL, type VARCHAR(100) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE tenant (id INT AUTO_INCREMENT NOT NULL, property_id INT NOT NULL, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, entry DATE NOT NULL, leave_accommodation DATE DEFAULT NULL, INDEX IDX_4E59C462549213EC (property_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, pseudo VARCHAR(50) NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE location_accounting ADD CONSTRAINT FK_D4ED003A668D0C5E FOREIGN KEY (operation_type_id) REFERENCES operation_type (id)');
         $this->addSql('ALTER TABLE location_accounting ADD CONSTRAINT FK_D4ED003A33B92F39 FOREIGN KEY (label_id) REFERENCES label (id)');
@@ -36,6 +37,7 @@ final class Version20201121101645 extends AbstractMigration
         $this->addSql('ALTER TABLE property_accounting ADD CONSTRAINT FK_D86421D6668D0C5E FOREIGN KEY (operation_type_id) REFERENCES operation_type (id)');
         $this->addSql('ALTER TABLE property_accounting ADD CONSTRAINT FK_D86421D633B92F39 FOREIGN KEY (label_id) REFERENCES label (id)');
         $this->addSql('ALTER TABLE property_accounting ADD CONSTRAINT FK_D86421D6549213EC FOREIGN KEY (property_id) REFERENCES property (id)');
+        $this->addSql('ALTER TABLE tenant ADD CONSTRAINT FK_4E59C462549213EC FOREIGN KEY (property_id) REFERENCES property (id)');
     }
 
     public function down(Schema $schema) : void
@@ -48,6 +50,7 @@ final class Version20201121101645 extends AbstractMigration
         $this->addSql('ALTER TABLE location_accounting DROP FOREIGN KEY FK_D4ED003A668D0C5E');
         $this->addSql('ALTER TABLE property_accounting DROP FOREIGN KEY FK_D86421D6668D0C5E');
         $this->addSql('ALTER TABLE property_accounting DROP FOREIGN KEY FK_D86421D6549213EC');
+        $this->addSql('ALTER TABLE tenant DROP FOREIGN KEY FK_4E59C462549213EC');
         $this->addSql('ALTER TABLE property DROP FOREIGN KEY FK_8BF21CDE9C81C6EB');
         $this->addSql('DROP TABLE label');
         $this->addSql('DROP TABLE location');
@@ -56,6 +59,7 @@ final class Version20201121101645 extends AbstractMigration
         $this->addSql('DROP TABLE property');
         $this->addSql('DROP TABLE property_accounting');
         $this->addSql('DROP TABLE property_type');
+        $this->addSql('DROP TABLE tenant');
         $this->addSql('DROP TABLE user');
     }
 }

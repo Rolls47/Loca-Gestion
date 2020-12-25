@@ -54,9 +54,15 @@ class Property
      */
     private $propertyAccountings;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Tenant::class, mappedBy="property")
+     */
+    private $tenants;
+
     public function __construct()
     {
         $this->propertyAccountings = new ArrayCollection();
+        $this->tenants = new ArrayCollection();
     }
 
     public function __toString()
@@ -155,6 +161,36 @@ class Property
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tenant[]
+     */
+    public function getTenants(): Collection
+    {
+        return $this->tenants;
+    }
+
+    public function addTenant(Tenant $tenant): self
+    {
+        if (!$this->tenants->contains($tenant)) {
+            $this->tenants[] = $tenant;
+            $tenant->setProperty($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTenant(Tenant $tenant): self
+    {
+        if ($this->tenants->removeElement($tenant)) {
+            // set the owning side to null (unless already changed)
+            if ($tenant->getProperty() === $this) {
+                $tenant->setProperty(null);
+            }
+        }
 
         return $this;
     }

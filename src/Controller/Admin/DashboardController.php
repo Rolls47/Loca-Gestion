@@ -9,6 +9,7 @@ use App\Entity\OperationType;
 use App\Entity\Property;
 use App\Entity\PropertyAccounting;
 use App\Entity\PropertyType;
+use App\Entity\Tenant;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -42,6 +43,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Les biens', 'far fa-building');
 
         yield MenuItem::linkToCrud('Localisation ', 'fas fa-map-marker-alt', Location::class);
+        yield MenuItem::linkToCrud('Locataire', 'fa fa-home', Tenant::class);
         yield MenuItem::linkToCrud('Propriété', 'fa fa-home', Property::class);
 
         yield MenuItem::section('Ligne compta', 'fas fa-calculator');
