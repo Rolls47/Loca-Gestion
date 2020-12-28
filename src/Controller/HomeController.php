@@ -22,11 +22,14 @@ class HomeController extends AbstractController
 
 
         $totalLocationAccounting = ($locationAccounting->totalLocationAccounting()[1] / 100);
+        $totalLocationAccountingTwig =($totalLocationAccounting - ($totalLocationAccounting * 2));
         $totalPropertyAccounting = ($propertyAccounting->totalPropertyAccounting()[1] / 100);
+        $benefit = ($totalLocationAccounting + $totalPropertyAccounting);
 
         return $this->render('home/index.html.twig', [
-            'sumLocationAccounting' => $totalLocationAccounting,
+            'sumLocationAccounting' => $totalLocationAccountingTwig,
             'sumPropertyAccounting' => $totalPropertyAccounting,
+            'benefit' => $benefit,
         ]);
     }
 }

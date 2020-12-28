@@ -3,14 +3,14 @@
 {% block title %}Hello LocationController!{% endblock %}
 
 {% block body %}
-    <div class="d-flex flex-column justify-content-center align-items-center mt-5 mb-5">
-        <img class="img-location" src="{{ asset('build/images/location.svg') }}" alt="">
-        <h1>Localisations des biens</h1>
-    </div>
     <div class="container">
+        <div class="d-flex flex-column justify-content-center align-items-center mt-5 mb-5">
+            <img class="img-location" src="{{ asset('build/images/location.svg') }}" alt="">
+            <h1>Localisations des biens</h1>
+        </div>
         <div class="row d-flex justify-content-around col-12">
             <div class="col-3" style="display: contents;">
-                     {% include '/Components/Location/list.html.twig' %}
+                {% include '/Components/Location/list.html.twig' %}
             </div>
         </div>
     </div>
